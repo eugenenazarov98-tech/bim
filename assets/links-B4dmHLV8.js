@@ -1,0 +1,1 @@
+const s="https://www.mos.ru/upload/documents/files/7252/MKE-OD-24-178Chast2TrebovaniyakCIMAR.PDF",e="text-sky-700 underline decoration-sky-300 underline-offset-2 hover:text-sky-600 hover:decoration-sky-500";export{s as M,e as l};
