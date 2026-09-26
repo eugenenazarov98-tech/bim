@@ -88,6 +88,9 @@
   body {
     @apply bg-background text-foreground;
   }
+  .dark {
+    color-scheme: dark;
+  }
   /* выбранное значение в select не должно вылезать за границы кнопки */
   [data-slot="select-trigger"] > [data-slot="select-value"] {
     display: block;

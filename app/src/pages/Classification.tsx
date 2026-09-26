@@ -48,6 +48,7 @@ import {
 } from "@/components/ui/select";
 import { revitCategories, type RevitCategory } from "@/data/categories";
 import { MGE_PDF_URL, linkClass } from "@/data/links";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 /* ---------- types ---------- */
 
@@ -97,8 +98,8 @@ const SOURCES: { key: SourceKey; badge: string; title: string }[] = [
 ];
 
 const BADGE_STYLES: Record<string, string> = {
-  ЭЛ: "bg-sky-100 text-sky-700 border-sky-300",
-  СТ: "bg-emerald-100 text-emerald-800 border-emerald-300",
+  ЭЛ: "bg-sky-100 dark:bg-sky-950 text-sky-700 dark:text-sky-400 border-sky-300 dark:border-sky-700",
+  СТ: "bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 border-emerald-300 dark:border-emerald-700",
   ТО: "bg-amber-100 text-amber-800 border-amber-300",
   СС: "bg-violet-100 text-violet-800 border-violet-300",
   ПЗ: "bg-rose-100 text-rose-800 border-rose-300",
@@ -330,11 +331,11 @@ function CopyCodeButton({ code }: { code: string }) {
       variant="outline"
       size="sm"
       onClick={onClick}
-      className="border-slate-300 bg-slate-100 text-slate-600 hover:bg-slate-200 hover:text-slate-900"
+      className="border-slate-300 dark:border-slate-600 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 hover:text-slate-900 dark:hover:text-slate-100"
       title="Копировать код"
     >
       {copied ? (
-        <Check className="mr-1.5 h-3.5 w-3.5 text-emerald-600" />
+        <Check className="mr-1.5 h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400" />
       ) : (
         <Copy className="mr-1.5 h-3.5 w-3.5" />
       )}
@@ -353,11 +354,11 @@ function ResultCard({
   onAdd: (item: ScoredEntry) => void;
 }) {
   return (
-    <Card className="border-slate-200 bg-white">
+    <Card className="border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900">
       <CardContent className="flex flex-col gap-3 p-4 sm:flex-row sm:items-start sm:justify-between">
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-center gap-2">
-            <span className="font-mono text-lg font-semibold tracking-wide text-sky-700">
+            <span className="font-mono text-lg font-semibold tracking-wide text-sky-700 dark:text-sky-400">
               {item.code}
             </span>
             <Badge variant="outline" className={BADGE_STYLES[item.badge] ?? ""} title="Классификатор">
@@ -366,15 +367,15 @@ function ResultCard({
             {item.ifc && (
               <Badge
                 variant="outline"
-                className="border-slate-300 bg-slate-100 font-mono text-slate-600"
+                className="border-slate-300 dark:border-slate-600 bg-slate-100 dark:bg-slate-800 font-mono text-slate-600 dark:text-slate-300"
                 title="Класс IFC"
               >
                 {item.ifc}
               </Badge>
             )}
           </div>
-          <div className="mt-1.5 text-base font-medium text-slate-900">{item.name}</div>
-          <div className="mt-1 text-sm text-slate-400">{item.path.join(" › ")}</div>
+          <div className="mt-1.5 text-base font-medium text-slate-900 dark:text-slate-100">{item.name}</div>
+          <div className="mt-1 text-sm text-slate-400 dark:text-slate-500">{item.path.join(" › ")}</div>
         </div>
         <div className="flex shrink-0 flex-wrap gap-2">
           <Button
@@ -384,8 +385,8 @@ function ResultCard({
             disabled={inSelection}
             className={
               inSelection
-                ? "border-emerald-300 bg-emerald-50 text-emerald-800"
-                : "border-slate-300 bg-slate-100 text-slate-600 hover:bg-slate-200 hover:text-slate-900"
+                ? "border-emerald-300 dark:border-emerald-700 bg-emerald-50 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300"
+                : "border-slate-300 dark:border-slate-600 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 hover:text-slate-900 dark:hover:text-slate-100"
             }
             title={inSelection ? "Уже в подборке" : "Добавить в подборку"}
           >
@@ -483,21 +484,24 @@ export default function Classification() {
   };
 
   return (
-    <div className="min-h-screen bg-white text-slate-900">
+    <div className="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100">
       <div className="mx-auto max-w-6xl px-4 py-8">
         <header className="mb-8">
-          <a href="../" className="text-sm text-slate-400 hover:text-slate-600">
-            ← На главную
-          </a>
+          <div className="flex items-center justify-between">
+            <a href="../" className="text-sm text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300">
+              ← На главную
+            </a>
+            <ThemeToggle />
+          </div>
           <div className="mt-2 flex flex-wrap items-center gap-3">
             <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">
               Классификация элементов информационной модели
             </h1>
-            <Badge variant="outline" className="border-slate-300 bg-slate-100 text-slate-500">
+            <Badge variant="outline" className="border-slate-300 dark:border-slate-600 bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400">
               МССК вер. 5.0
             </Badge>
           </div>
-          <p className="mt-2 text-slate-500">
+          <p className="mt-2 text-slate-500 dark:text-slate-400">
             Использовать данный сервис как вспомогательный к{" "}
             <a href={MGE_PDF_URL} target="_blank" rel="noopener noreferrer" className={linkClass}>
               МКЭ-ОД-24-178. Часть 2. Требования к ЦИМ АР (PDF)
@@ -505,17 +509,17 @@ export default function Classification() {
           </p>
         </header>
 
-        <Card className="mb-6 border-slate-200 bg-white">
+        <Card className="mb-6 border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900">
           <CardHeader className="pb-4">
-            <CardTitle className="text-lg text-slate-900">Параметры классификации</CardTitle>
-            <CardDescription className="text-slate-400">
+            <CardTitle className="text-lg text-slate-900 dark:text-slate-100">Параметры классификации</CardTitle>
+            <CardDescription className="text-slate-400 dark:text-slate-500">
               Выберите категорию и начните вводить именование элемента — варианты обновятся
               автоматически
             </CardDescription>
           </CardHeader>
           <CardContent className="grid gap-4 sm:grid-cols-[minmax(0,2fr)_minmax(0,2fr)_minmax(0,3fr)]">
             <div className="grid gap-2">
-              <Label htmlFor="category" className="text-slate-600">
+              <Label htmlFor="category" className="text-slate-600 dark:text-slate-300">
                 Категория
               </Label>
               <Popover open={categoryOpen} onOpenChange={setCategoryOpen}>
@@ -525,20 +529,20 @@ export default function Classification() {
                     variant="outline"
                     role="combobox"
                     aria-expanded={categoryOpen}
-                    className="w-full justify-between border-slate-300 bg-slate-100 font-normal text-slate-900 hover:bg-slate-100 hover:text-slate-900"
+                    className="w-full justify-between border-slate-300 dark:border-slate-600 bg-slate-100 dark:bg-slate-800 font-normal text-slate-900 dark:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-slate-100"
                   >
                     <span className="truncate">{category.ru}</span>
                     <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                   </Button>
                 </PopoverTrigger>
                 <PopoverContent
-                  className="w-[var(--radix-popover-trigger-width)] border-slate-300 bg-white p-0"
+                  className="w-[var(--radix-popover-trigger-width)] border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 p-0"
                   align="start"
                 >
-                  <Command className="bg-white">
-                    <CommandInput placeholder="Поиск категории…" className="text-slate-900" />
+                  <Command className="bg-white dark:bg-slate-900">
+                    <CommandInput placeholder="Поиск категории…" className="text-slate-900 dark:text-slate-100" />
                     <CommandList>
-                      <CommandEmpty className="text-slate-400">Категория не найдена</CommandEmpty>
+                      <CommandEmpty className="text-slate-400 dark:text-slate-500">Категория не найдена</CommandEmpty>
                       <CommandGroup>
                         {CATEGORIES.map((c) => (
                           <CommandItem
@@ -548,7 +552,7 @@ export default function Classification() {
                               setCategoryId(c.id);
                               setCategoryOpen(false);
                             }}
-                            className="text-slate-900 aria-selected:bg-slate-100"
+                            className="text-slate-900 dark:text-slate-100 aria-selected:bg-slate-100 dark:aria-selected:bg-slate-800"
                           >
                             <Check
                               className={`mr-2 h-4 w-4 ${c.id === categoryId ? "opacity-100" : "opacity-0"}`}
@@ -564,17 +568,17 @@ export default function Classification() {
             </div>
 
             <div className="grid min-w-0 gap-2">
-              <Label htmlFor="mssk-source" className="text-slate-600">
+              <Label htmlFor="mssk-source" className="text-slate-600 dark:text-slate-300">
                 Категория МССК
               </Label>
               <Select value={source} onValueChange={(v) => setSource(v)}>
                 <SelectTrigger
                   id="mssk-source"
-                  className="w-full border-slate-300 bg-slate-100 font-normal text-slate-900"
+                  className="w-full border-slate-300 dark:border-slate-600 bg-slate-100 dark:bg-slate-800 font-normal text-slate-900 dark:text-slate-100"
                 >
                   <SelectValue />
                 </SelectTrigger>
-                <SelectContent className="border-slate-300 bg-white">
+                <SelectContent className="border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900">
                   <SelectItem value={ALL_SOURCES}>Все классификаторы</SelectItem>
                   {SOURCES.map((s) => (
                     <SelectItem key={s.key} value={s.key}>
@@ -586,17 +590,17 @@ export default function Classification() {
             </div>
 
             <div className="grid gap-2">
-              <Label htmlFor="family" className="text-slate-600">
+              <Label htmlFor="family" className="text-slate-600 dark:text-slate-300">
                 Наименование элемента
               </Label>
               <div className="relative">
-                <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
+                <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400 dark:text-slate-500" />
                 <Input
                   id="family"
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
                   placeholder="Например: Стена наружная трехслойная 420"
-                  className="border-slate-300 bg-slate-100 pl-9 text-slate-900 placeholder:text-slate-400"
+                  className="border-slate-300 dark:border-slate-600 bg-slate-100 dark:bg-slate-800 pl-9 text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500"
                 />
               </div>
             </div>
@@ -606,7 +610,7 @@ export default function Classification() {
         <div className="grid items-start gap-6 lg:grid-cols-[minmax(0,1fr)_320px]">
           <section>
             <div className="mb-3 flex items-baseline justify-between">
-              <h2 className="text-sm font-medium uppercase tracking-wider text-slate-400">
+              <h2 className="text-sm font-medium uppercase tracking-wider text-slate-400 dark:text-slate-500">
                 {status === "ready" &&
                   (isEmptyQuery
                     ? `Варианты для категории «${category.ru}»`
@@ -614,21 +618,21 @@ export default function Classification() {
               </h2>
             </div>
             {status === "loading" ? (
-              <Card className="border-slate-200 bg-slate-50">
-                <CardContent className="flex items-center justify-center gap-3 p-8 text-slate-400">
-                  <Loader2 className="h-5 w-5 animate-spin text-sky-600" />
+              <Card className="border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900">
+                <CardContent className="flex items-center justify-center gap-3 p-8 text-slate-400 dark:text-slate-500">
+                  <Loader2 className="h-5 w-5 animate-spin text-sky-600 dark:text-sky-400" />
                   Загрузка классификатора…
                 </CardContent>
               </Card>
             ) : status === "error" ? (
-              <Card className="border-dashed border-red-300 bg-red-50">
-                <CardContent className="p-8 text-center text-red-700">
+              <Card className="border-dashed border-red-300 dark:border-red-700 bg-red-50 dark:bg-red-950/60">
+                <CardContent className="p-8 text-center text-red-700 dark:text-red-400">
                   Не удалось загрузить данные, обновите страницу
                 </CardContent>
               </Card>
             ) : results.length === 0 ? (
-              <Card className="border-dashed border-slate-200 bg-slate-50">
-                <CardContent className="p-8 text-center text-slate-400">
+              <Card className="border-dashed border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900">
+                <CardContent className="p-8 text-center text-slate-400 dark:text-slate-500">
                   Ничего не найдено, попробуйте изменить имя или категорию
                 </CardContent>
               </Card>
@@ -647,18 +651,18 @@ export default function Classification() {
           </section>
 
           <aside className="lg:sticky lg:top-4">
-            <Card className="border-slate-200 bg-white">
+            <Card className="border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900">
               <CardHeader className="pb-3">
                 <div className="flex items-center justify-between">
-                  <CardTitle className="text-lg text-slate-900">Подборка</CardTitle>
-                  <Badge variant="outline" className="border-slate-300 bg-slate-100 text-slate-600">
+                  <CardTitle className="text-lg text-slate-900 dark:text-slate-100">Подборка</CardTitle>
+                  <Badge variant="outline" className="border-slate-300 dark:border-slate-600 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
                     {selection.length}
                   </Badge>
                 </div>
               </CardHeader>
               <CardContent className="grid gap-3">
                 {selection.length === 0 ? (
-                  <p className="text-sm text-slate-400">
+                  <p className="text-sm text-slate-400 dark:text-slate-500">
                     Подборка пуста — добавляйте коды кнопкой «В подборку»
                   </p>
                 ) : (
@@ -667,12 +671,12 @@ export default function Classification() {
                       {selection.map((item) => (
                         <li
                           key={item.code}
-                          className="rounded-md border border-slate-200 bg-slate-50 p-2.5"
+                          className="rounded-md border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 p-2.5"
                         >
                           <div className="flex items-start justify-between gap-2">
                             <div className="min-w-0">
                               <div className="flex flex-wrap items-center gap-1.5">
-                                <span className="font-mono text-sm font-semibold text-sky-700">
+                                <span className="font-mono text-sm font-semibold text-sky-700 dark:text-sky-400">
                                   {item.code}
                                 </span>
                                 <Badge
@@ -682,10 +686,10 @@ export default function Classification() {
                                   {item.badge}
                                 </Badge>
                               </div>
-                              <div className="mt-0.5 truncate text-sm text-slate-900">
+                              <div className="mt-0.5 truncate text-sm text-slate-900 dark:text-slate-100">
                                 {item.name}
                               </div>
-                              <div className="mt-0.5 text-xs text-slate-400">
+                              <div className="mt-0.5 text-xs text-slate-400 dark:text-slate-500">
                                 {item.categoryRu}
                                 {item.familyName ? ` / ${item.familyName}` : ""}
                               </div>
@@ -694,7 +698,7 @@ export default function Classification() {
                               variant="ghost"
                               size="icon"
                               onClick={() => removeFromSelection(item.code)}
-                              className="h-7 w-7 shrink-0 text-slate-400 hover:bg-slate-100 hover:text-red-600"
+                              className="h-7 w-7 shrink-0 text-slate-400 dark:text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-red-600 dark:hover:text-red-400"
                               title="Удалить из подборки"
                             >
                               <X className="h-4 w-4" />
@@ -716,7 +720,7 @@ export default function Classification() {
                         variant="outline"
                         size="sm"
                         onClick={clearSelection}
-                        className="border-slate-300 bg-slate-100 text-slate-600 hover:bg-slate-200 hover:text-slate-900"
+                        className="border-slate-300 dark:border-slate-600 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 hover:text-slate-900 dark:hover:text-slate-100"
                       >
                         <Trash2 className="mr-1.5 h-3.5 w-3.5" />
                         Очистить
@@ -733,15 +737,15 @@ export default function Classification() {
           <CollapsibleTrigger asChild>
             <Button
               variant="ghost"
-              className="w-full justify-between text-slate-400 hover:bg-slate-100 hover:text-slate-900"
+              className="w-full justify-between text-slate-400 dark:text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-slate-100"
             >
               О классификаторе
               <ChevronsUpDown className="h-4 w-4" />
             </Button>
           </CollapsibleTrigger>
           <CollapsibleContent>
-            <Card className="mt-2 border-slate-200 bg-white">
-              <CardContent className="grid gap-3 p-4 text-sm text-slate-400">
+            <Card className="mt-2 border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900">
+              <CardContent className="grid gap-3 p-4 text-sm text-slate-400 dark:text-slate-500">
                 <p>
                   МССК — Международная система строительных классификаторов. Подбор ведётся
                   одновременно по пяти классификаторам:
@@ -753,13 +757,13 @@ export default function Classification() {
                         <Badge variant="outline" className={BADGE_STYLES[s.badge] ?? ""}>
                           {s.badge}
                         </Badge>
-                        <span className="text-slate-600">{s.title}</span>
-                        <span className="text-slate-400">— {s.count} записей</span>
+                        <span className="text-slate-600 dark:text-slate-300">{s.title}</span>
+                        <span className="text-slate-400 dark:text-slate-500">— {s.count} записей</span>
                       </li>
                     ))}
                   </ul>
                 ) : (
-                  <p className="text-slate-400">
+                  <p className="text-slate-400 dark:text-slate-500">
                     {status === "error" ? "Данные не загружены" : "Загрузка данных…"}
                   </p>
                 )}

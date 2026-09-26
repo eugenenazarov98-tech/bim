@@ -20,6 +20,7 @@ import {
 } from "@/components/ui/table";
 import { dictionaries, type DictionaryRow } from "@/data/dictionaries";
 import { sortMark, useSortable } from "@/hooks/useSortable";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 const ALL = "all";
 
@@ -34,24 +35,24 @@ function DictionaryTable({ rows }: { rows: DictionaryRow[] }) {
   const { sort, toggle, sorted } = useSortable(rows, "value", getValue);
 
   return (
-    <Card className="border-slate-200 bg-white">
+    <Card className="border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900">
       <CardContent className="overflow-x-auto p-0">
         <Table>
           <TableHeader>
-            <TableRow className="border-slate-200 hover:bg-transparent">
+            <TableRow className="border-slate-200 dark:border-slate-700 hover:bg-transparent">
               {COLUMNS.map((c) => (
                 <TableHead key={c.key} className="whitespace-nowrap">
                   <button
                     type="button"
                     onClick={() => toggle(c.key)}
-                    className="inline-flex items-center gap-1 font-medium text-slate-600 hover:text-slate-900"
+                    className="inline-flex items-center gap-1 font-medium text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-slate-100"
                     title="Сортировать"
                   >
                     {c.title}
                     {sort.key === c.key ? (
                       <span>{sortMark(sort, c.key)}</span>
                     ) : (
-                      <ArrowDownUp className="h-3 w-3 text-slate-300" />
+                      <ArrowDownUp className="h-3 w-3 text-slate-300 dark:text-slate-600" />
                     )}
                   </button>
                 </TableHead>
@@ -62,19 +63,19 @@ function DictionaryTable({ rows }: { rows: DictionaryRow[] }) {
             {sorted.map((r, i) => (
               <TableRow
                 key={`${r.value}-${i}`}
-                className="border-slate-200 align-top hover:bg-slate-50"
+                className="border-slate-200 dark:border-slate-700 align-top hover:bg-slate-50 dark:hover:bg-slate-800"
               >
-                <TableCell className="whitespace-normal break-all font-mono text-[13px] text-slate-700">
+                <TableCell className="whitespace-normal break-all font-mono text-[13px] text-slate-700 dark:text-slate-300">
                   {r.value || "—"}
                 </TableCell>
-                <TableCell className="whitespace-normal break-words text-sm text-slate-600">
+                <TableCell className="whitespace-normal break-words text-sm text-slate-600 dark:text-slate-300">
                   {r.desc || "—"}
                 </TableCell>
               </TableRow>
             ))}
             {sorted.length === 0 && (
-              <TableRow className="border-slate-200 hover:bg-transparent">
-                <TableCell colSpan={2} className="p-8 text-center text-slate-400">
+              <TableRow className="border-slate-200 dark:border-slate-700 hover:bg-transparent">
+                <TableCell colSpan={2} className="p-8 text-center text-slate-400 dark:text-slate-500">
                   Ничего не найдено
                 </TableCell>
               </TableRow>
@@ -108,37 +109,38 @@ export default function Dictionaries() {
   const total = visible.reduce((sum, d) => sum + d.rows.length, 0);
 
   return (
-    <div className="min-h-screen bg-white text-slate-900">
+    <div className="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100">
       <div className="mx-auto max-w-4xl px-4 py-8">
         <header className="mb-8">
-          <div className="flex gap-4 text-sm">
-            <a href="../../" className="text-slate-400 hover:text-slate-600">
+          <div className="flex items-center gap-4 text-sm">
+            <a href="../../" className="text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300">
               ← На главную
             </a>
-            <a href="../" className="text-slate-400 hover:text-slate-600">
+            <a href="../" className="text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300">
               ← К mapping
             </a>
+            <span className="ml-auto"><ThemeToggle /></span>
           </div>
           <h1 className="mt-2 text-2xl font-bold tracking-tight sm:text-3xl">
             Справочники значений
           </h1>
-          <p className="mt-2 text-slate-500">Mapping ЦИМ АР · допустимые значения параметров</p>
+          <p className="mt-2 text-slate-500 dark:text-slate-400">Mapping ЦИМ АР · допустимые значения параметров</p>
         </header>
 
-        <Card className="mb-6 border-slate-200 bg-white">
+        <Card className="mb-6 border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900">
           <CardContent className="grid gap-4 p-4 sm:grid-cols-[repeat(2,minmax(0,1fr))]">
             <div className="grid min-w-0 gap-2">
-              <Label htmlFor="dict" className="text-slate-600">
+              <Label htmlFor="dict" className="text-slate-600 dark:text-slate-300">
                 Справочник
               </Label>
               <Select value={dict} onValueChange={setDict}>
                 <SelectTrigger
                   id="dict"
-                  className="w-full border-slate-300 bg-slate-100 font-normal text-slate-900"
+                  className="w-full border-slate-300 dark:border-slate-600 bg-slate-100 dark:bg-slate-800 font-normal text-slate-900 dark:text-slate-100"
                 >
                   <SelectValue />
                 </SelectTrigger>
-                <SelectContent className="border-slate-300 bg-white">
+                <SelectContent className="border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900">
                   <SelectItem value={ALL}>Все</SelectItem>
                   {dictionaries.map((d, i) => (
                     <SelectItem key={d.title} value={String(i)}>
@@ -149,24 +151,24 @@ export default function Dictionaries() {
               </Select>
             </div>
             <div className="grid gap-2">
-              <Label htmlFor="q" className="text-slate-600">
+              <Label htmlFor="q" className="text-slate-600 dark:text-slate-300">
                 Поиск
               </Label>
               <div className="relative">
-                <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
+                <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400 dark:text-slate-500" />
                 <Input
                   id="q"
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
                   placeholder="По значению и описанию…"
-                  className="border-slate-300 bg-slate-100 pl-9 text-slate-900 placeholder:text-slate-400"
+                  className="border-slate-300 dark:border-slate-600 bg-slate-100 dark:bg-slate-800 pl-9 text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500"
                 />
               </div>
             </div>
           </CardContent>
         </Card>
 
-        <h2 className="mb-3 text-sm font-medium uppercase tracking-wider text-slate-400">
+        <h2 className="mb-3 text-sm font-medium uppercase tracking-wider text-slate-400 dark:text-slate-500">
           Найдено значений: {total}
         </h2>
 
@@ -174,7 +176,7 @@ export default function Dictionaries() {
           {visible.map((d) => (
             <section key={d.title}>
               {dict === ALL && (
-                <h3 className="mb-2 text-base font-medium text-slate-900">{d.title}</h3>
+                <h3 className="mb-2 text-base font-medium text-slate-900 dark:text-slate-100">{d.title}</h3>
               )}
               <DictionaryTable rows={d.rows} />
             </section>

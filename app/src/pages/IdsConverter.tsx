@@ -20,6 +20,7 @@ import {
   Building2,
 } from "lucide-react";
 import { convertHtmlToIds, type ConversionResult } from "@/lib/idsConverter";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 const SAMPLE_HTML = `<html><body>
 <section class="specification">
@@ -56,7 +57,7 @@ function highlightXml(xml: string): ReactNode[] {
       const [full, tag, attr, text] = m;
       if (tag) {
         parts.push(
-          <span key={key++} className="text-sky-700">
+          <span key={key++} className="text-sky-700 dark:text-sky-400">
             {tag}
           </span>
         );
@@ -68,7 +69,7 @@ function highlightXml(xml: string): ReactNode[] {
         );
       } else if (text) {
         parts.push(
-          <span key={key++} className="text-slate-700">
+          <span key={key++} className="text-slate-700 dark:text-slate-300">
             {text}
           </span>
         );
@@ -159,21 +160,24 @@ export default function IdsConverter() {
     : 0;
 
   return (
-    <div className="min-h-screen bg-white text-slate-900">
+    <div className="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100">
       <main className="max-w-7xl mx-auto px-4 sm:px-6 py-8 space-y-6">
         <header className="mb-2">
-          <a href="../" className="text-sm text-slate-400 hover:text-slate-600">
-            ← На главную
-          </a>
+          <div className="flex items-center justify-between">
+            <a href="../" className="text-sm text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300">
+              ← На главную
+            </a>
+            <ThemeToggle />
+          </div>
           <div className="mt-2 flex flex-wrap items-center gap-3">
             <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">
               Конвертер отчётов ifctester в IDS
             </h1>
-            <Badge variant="outline" className="border-slate-300 bg-slate-100 text-slate-500">
+            <Badge variant="outline" className="border-slate-300 dark:border-slate-600 bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400">
               IDS v0.9.3
             </Badge>
           </div>
-          <p className="mt-2 text-slate-500">
+          <p className="mt-2 text-slate-500 dark:text-slate-400">
             Преобразование HTML-отчёта проверки IFC-модели в файл IDS 0.9.3 (ifctester 0.8.1)
           </p>
         </header>
@@ -185,14 +189,14 @@ export default function IdsConverter() {
             { icon: ArrowRight, title: "2. Конвертируйте", text: "Секции превратятся в спецификации IDS 0.9.3" },
             { icon: Download, title: "3. Скачайте .ids", text: "Готовый файл для проверки IFC-модели" },
           ].map((s) => (
-            <Card key={s.title} className="bg-white border-slate-200">
+            <Card key={s.title} className="bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-700">
               <CardContent className="pt-5 flex gap-3 items-start">
-                <div className="h-8 w-8 rounded-md bg-slate-100 flex items-center justify-center shrink-0">
-                  <s.icon className="h-4 w-4 text-sky-600" />
+                <div className="h-8 w-8 rounded-md bg-slate-100 dark:bg-slate-800 flex items-center justify-center shrink-0">
+                  <s.icon className="h-4 w-4 text-sky-600 dark:text-sky-400" />
                 </div>
                 <div className="min-w-0">
                   <p className="font-medium text-sm">{s.title}</p>
-                  <p className="text-xs text-slate-500 mt-1">{s.text}</p>
+                  <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">{s.text}</p>
                 </div>
               </CardContent>
             </Card>
@@ -201,13 +205,13 @@ export default function IdsConverter() {
 
         <div className="grid lg:grid-cols-2 gap-6 items-start min-w-0">
           {/* Input */}
-          <Card className="bg-white border-slate-200 min-w-0">
+          <Card className="bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-700 min-w-0">
             <CardHeader>
               <CardTitle className="text-base flex items-center gap-2">
-                <ClipboardPaste className="h-4 w-4 text-sky-600" />
+                <ClipboardPaste className="h-4 w-4 text-sky-600 dark:text-sky-400" />
                 HTML-отчёт ifctester
               </CardTitle>
-              <CardDescription className="text-slate-500">
+              <CardDescription className="text-slate-500 dark:text-slate-400">
                 Вставьте содержимое отчёта или загрузите файл .html
               </CardDescription>
             </CardHeader>
@@ -226,18 +230,18 @@ export default function IdsConverter() {
                 }}
                 className={`border-2 border-dashed rounded-lg p-5 text-center transition-colors cursor-pointer ${
                   dragOver
-                    ? "border-sky-500 bg-sky-50"
-                    : "border-slate-300 hover:border-slate-400"
+                    ? "border-sky-500 bg-sky-50 dark:bg-sky-950/60"
+                    : "border-slate-300 dark:border-slate-600 hover:border-slate-400 dark:hover:border-slate-500"
                 }`}
                 onClick={() => fileInputRef.current?.click()}
               >
-                <FileUp className="h-6 w-6 mx-auto text-slate-400 mb-2" />
+                <FileUp className="h-6 w-6 mx-auto text-slate-400 dark:text-slate-500 mb-2" />
                 {fileName ? (
-                  <p className="text-sm text-sky-700 flex items-center justify-center gap-2 break-all">
+                  <p className="text-sm text-sky-700 dark:text-sky-400 flex items-center justify-center gap-2 break-all">
                     <FileCheck2 className="h-4 w-4 shrink-0" /> {fileName}
                   </p>
                 ) : (
-                  <p className="text-sm text-slate-500">
+                  <p className="text-sm text-slate-500 dark:text-slate-400">
                     Перетащите файл отчёта сюда или нажмите для выбора
                   </p>
                 )}
@@ -260,15 +264,15 @@ export default function IdsConverter() {
                   setFileName(null);
                 }}
                 placeholder="<html>… вставьте HTML-отчёт ifctester …</html>"
-                className="min-h-[220px] font-mono text-xs bg-slate-50 border-slate-300 text-slate-800 w-full max-w-full break-all whitespace-pre-wrap"
+                className="min-h-[220px] font-mono text-xs bg-slate-50 dark:bg-slate-900 border-slate-300 dark:border-slate-600 text-slate-800 dark:text-slate-200 w-full max-w-full break-all whitespace-pre-wrap"
               />
 
               <div className="space-y-1.5">
-                <label className="text-xs text-slate-500">Название IDS (элемент &lt;title&gt;)</label>
+                <label className="text-xs text-slate-500 dark:text-slate-400">Название IDS (элемент &lt;title&gt;)</label>
                 <Input
                   value={idsTitle}
                   onChange={(e) => setIdsTitle(e.target.value)}
-                  className="bg-white border-slate-300 text-sm"
+                  className="bg-white dark:bg-slate-900 border-slate-300 dark:border-slate-600 text-sm"
                 />
               </div>
 
@@ -283,7 +287,7 @@ export default function IdsConverter() {
                 </Button>
                 <Button
                   variant="outline"
-                  className="border-slate-300 text-slate-700 hover:bg-slate-100"
+                  className="border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800"
                   onClick={() => {
                     setHtml(SAMPLE_HTML);
                     setFileName(null);
@@ -298,13 +302,13 @@ export default function IdsConverter() {
           </Card>
 
           {/* Output */}
-          <Card className="bg-white border-slate-200 min-w-0">
+          <Card className="bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-700 min-w-0">
             <CardHeader>
               <CardTitle className="text-base flex items-center gap-2">
-                <FileCode2 className="h-4 w-4 text-emerald-600" />
+                <FileCode2 className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
                 IDS 0.9.3 XML
               </CardTitle>
-              <CardDescription className="text-slate-500">
+              <CardDescription className="text-slate-500 dark:text-slate-400">
                 {result
                   ? "Готовый IDS-файл — скопируйте или скачайте"
                   : "Результат появится после конвертации"}
@@ -328,24 +332,24 @@ export default function IdsConverter() {
                   )}
 
                   <div className="flex gap-2 flex-wrap">
-                    <Badge className="bg-slate-100 text-slate-700 hover:bg-slate-100 gap-1.5">
+                    <Badge className="bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 gap-1.5">
                       <Building2 className="h-3 w-3" />
                       Спецификаций: {result.specifications.length}
                     </Badge>
-                    <Badge className="bg-slate-100 text-slate-700 hover:bg-slate-100 gap-1.5">
+                    <Badge className="bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 gap-1.5">
                       <ListChecks className="h-3 w-3" />
                       Требований: {totalRequirements}
                     </Badge>
                   </div>
 
-                  <div className="rounded-lg border border-slate-200 bg-slate-50 max-h-[420px] overflow-auto w-full max-w-full">
+                  <div className="rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 max-h-[420px] overflow-auto w-full max-w-full">
                     <div className="p-4 font-mono text-xs w-max">{highlighted}</div>
                   </div>
 
                   <div className="flex flex-col sm:flex-row gap-3">
                     <Button
                       onClick={onDownload}
-                      className="flex-1 bg-emerald-600 hover:bg-emerald-500 text-white"
+                      className="flex-1 bg-emerald-600 hover:bg-emerald-500 dark:hover:bg-emerald-500 text-white"
                     >
                       <Download className="h-4 w-4 mr-2" />
                       Скачать .ids
@@ -353,11 +357,11 @@ export default function IdsConverter() {
                     <Button
                       variant="outline"
                       onClick={onCopy}
-                      className="border-slate-300 text-slate-700 hover:bg-slate-100"
+                      className="border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800"
                     >
                       {copied ? (
                         <>
-                          <Check className="h-4 w-4 mr-2 text-emerald-600" />
+                          <Check className="h-4 w-4 mr-2 text-emerald-600 dark:text-emerald-400" />
                           Скопировано
                         </>
                       ) : (
@@ -371,20 +375,20 @@ export default function IdsConverter() {
 
                   {/* Specifications summary */}
                   <div className="space-y-2">
-                    <p className="text-xs font-medium text-slate-500 uppercase tracking-wide">
+                    <p className="text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wide">
                       Найденные спецификации
                     </p>
                     <div className="space-y-1.5 max-h-48 overflow-auto pr-1">
                       {result.specifications.map((s, i) => (
                         <div
                           key={i}
-                          className="text-xs bg-slate-50 border border-slate-200 rounded-md px-3 py-2 flex items-center gap-2"
+                          className="text-xs bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-md px-3 py-2 flex items-center gap-2"
                         >
-                          <Badge variant="outline" className="border-sky-300 text-sky-700 font-mono shrink-0">
+                          <Badge variant="outline" className="border-sky-300 dark:border-sky-700 text-sky-700 dark:text-sky-400 font-mono shrink-0">
                             {s.ifcClass ?? "—"}
                           </Badge>
-                          <span className="text-slate-700 truncate">{s.name}</span>
-                          <span className="ml-auto text-slate-500 shrink-0">
+                          <span className="text-slate-700 dark:text-slate-300 truncate">{s.name}</span>
+                          <span className="ml-auto text-slate-500 dark:text-slate-400 shrink-0">
                             {s.requirements.length + s.materials.length} треб.
                             {s.applicabilityProperties.length > 0 &&
                               ` · ${s.applicabilityProperties.length} фасет применимости`}
@@ -395,8 +399,8 @@ export default function IdsConverter() {
                   </div>
                 </>
               ) : (
-                <div className="rounded-lg border border-dashed border-slate-300 p-12 text-center text-slate-500 text-sm">
-                  <FileCode2 className="h-10 w-10 mx-auto mb-3 text-slate-300" />
+                <div className="rounded-lg border border-dashed border-slate-300 dark:border-slate-600 p-12 text-center text-slate-500 dark:text-slate-400 text-sm">
+                  <FileCode2 className="h-10 w-10 mx-auto mb-3 text-slate-300 dark:text-slate-600" />
                   Загрузите HTML-отчёт и нажмите «Конвертировать в IDS»
                 </div>
               )}
@@ -405,34 +409,34 @@ export default function IdsConverter() {
         </div>
 
         {/* Rules */}
-        <Card className="bg-white border-slate-200">
+        <Card className="bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-700">
           <CardHeader>
             <CardTitle className="text-base">Правила конвертации</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4 text-xs text-slate-500">
+            <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4 text-xs text-slate-500 dark:text-slate-400">
               <div className="space-y-1">
-                <p className="text-slate-800 font-medium">Секция → specification</p>
+                <p className="text-slate-800 dark:text-slate-200 font-medium">Секция → specification</p>
                 <p>
-                  Заголовок «<span className="font-mono text-sky-700">IfcClass/Название</span>»
+                  Заголовок «<span className="font-mono text-sky-700 dark:text-sky-400">IfcClass/Название</span>»
                   становится спецификацией с именем секции.
                 </p>
               </div>
               <div className="space-y-1">
-                <p className="text-slate-800 font-medium">Applicability</p>
+                <p className="text-slate-800 dark:text-slate-200 font-medium">Applicability</p>
                 <p>
-                  «<span className="font-mono text-sky-700">All IFC… data</span>» → фасет{" "}
+                  «<span className="font-mono text-sky-700 dark:text-sky-400">All IFC… data</span>» → фасет{" "}
                   <span className="font-mono">entity</span>. «
-                  <span className="font-mono text-sky-700">
+                  <span className="font-mono text-sky-700 dark:text-sky-400">
                     Elements with … in the dataset …
                   </span>
                   » → фасет <span className="font-mono">property</span> применимости.
                 </p>
               </div>
               <div className="space-y-1">
-                <p className="text-slate-800 font-medium">Requirements</p>
+                <p className="text-slate-800 dark:text-slate-200 font-medium">Requirements</p>
                 <p>
-                  «<span className="font-mono text-sky-700">
+                  «<span className="font-mono text-sky-700 dark:text-sky-400">
                     … data shall/may be [значение and] in the dataset …
                   </span>
                   » → фасеты <span className="font-mono">property</span> с{" "}
@@ -444,7 +448,7 @@ export default function IdsConverter() {
           </CardContent>
         </Card>
 
-        <footer className="text-center text-xs text-slate-600 pb-6">
+        <footer className="text-center text-xs text-slate-600 dark:text-slate-300 pb-6">
           Конвертация выполняется локально в браузере — данные не покидают ваш компьютер.
         </footer>
       </main>

@@ -21,6 +21,7 @@ import {
 import { mappingSections, type MappingRow } from "@/data/mappingData";
 import { linkClass } from "@/data/links";
 import { sortMark, useSortable } from "@/hooks/useSortable";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 interface FlatRow extends MappingRow {
   section: string;
@@ -75,17 +76,17 @@ function FilterSelect({
 }) {
   return (
     <div className="grid min-w-0 gap-2">
-      <Label htmlFor={id} className="text-slate-600">
+      <Label htmlFor={id} className="text-slate-600 dark:text-slate-300">
         {label}
       </Label>
       <Select value={value} onValueChange={onChange}>
         <SelectTrigger
           id={id}
-          className="w-full border-slate-300 bg-slate-100 font-normal text-slate-900"
+          className="w-full border-slate-300 dark:border-slate-600 bg-slate-100 dark:bg-slate-800 font-normal text-slate-900 dark:text-slate-100"
         >
           <SelectValue />
         </SelectTrigger>
-        <SelectContent className="border-slate-300 bg-white">
+        <SelectContent className="border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900">
           <SelectItem value={ALL}>{allLabel}</SelectItem>
           {options.map((o) => (
             <SelectItem key={o} value={o}>
@@ -137,22 +138,25 @@ export default function Mapping() {
   const { sort, toggle, sorted } = useSortable(filtered, "section", getValue);
 
   return (
-    <div className="min-h-screen bg-white text-slate-900">
+    <div className="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100">
       <div className="mx-auto max-w-7xl px-4 py-8">
         <header className="mb-8">
-          <a href="../" className="text-sm text-slate-400 hover:text-slate-600">
-            ← На главную
-          </a>
+          <div className="flex items-center justify-between">
+            <a href="../" className="text-sm text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300">
+              ← На главную
+            </a>
+            <ThemeToggle />
+          </div>
           <h1 className="mt-2 text-2xl font-bold tracking-tight sm:text-3xl">
             Наполнение элементов информационной модели
           </h1>
-          <p className="mt-2 text-slate-500">
+          <p className="mt-2 text-slate-500 dark:text-slate-400">
             Mapping ЦИМ АР · соответствие параметров IFC, ФОП и требований МГЭ
           </p>
           <div
             role="group"
             aria-label="Режим отображения"
-            className="mt-4 inline-flex rounded-lg border border-slate-200 bg-slate-100 p-1"
+            className="mt-4 inline-flex rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 p-1"
           >
             {MODES.map((m) => (
               <button
@@ -162,8 +166,8 @@ export default function Mapping() {
                 onClick={() => setMode(m.key)}
                 className={`rounded-md px-4 py-1.5 text-sm transition-colors ${
                   mode === m.key
-                    ? "bg-white font-medium text-slate-900 shadow-sm"
-                    : "text-slate-500 hover:text-slate-900"
+                    ? "bg-white dark:bg-slate-900 font-medium text-slate-900 dark:text-slate-100 shadow-sm"
+                    : "text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100"
                 }`}
               >
                 {m.label}
@@ -172,20 +176,20 @@ export default function Mapping() {
           </div>
         </header>
 
-        <Card className="mb-6 border-slate-200 bg-white">
+        <Card className="mb-6 border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900">
           <CardContent className="grid gap-4 p-4 sm:grid-cols-[repeat(2,minmax(0,1fr))] lg:grid-cols-[repeat(5,minmax(0,1fr))]">
             <div className="grid gap-2 lg:col-span-1">
-              <Label htmlFor="q" className="text-slate-600">
+              <Label htmlFor="q" className="text-slate-600 dark:text-slate-300">
                 Поиск
               </Label>
               <div className="relative">
-                <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
+                <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400 dark:text-slate-500" />
                 <Input
                   id="q"
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
                   placeholder="По всем колонкам…"
-                  className="border-slate-300 bg-slate-100 pl-9 text-slate-900 placeholder:text-slate-400"
+                  className="border-slate-300 dark:border-slate-600 bg-slate-100 dark:bg-slate-800 pl-9 text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500"
                 />
               </div>
             </div>
@@ -225,38 +229,38 @@ export default function Mapping() {
         </Card>
 
         <div className="mb-3 flex flex-wrap items-baseline justify-between gap-2">
-          <h2 className="text-sm font-medium uppercase tracking-wider text-slate-400">
+          <h2 className="text-sm font-medium uppercase tracking-wider text-slate-400 dark:text-slate-500">
             Найдено параметров: {sorted.length}
           </h2>
           <div className="text-sm">
             <a href="dictionaries/" className={linkClass}>
               Справочники значений →
             </a>
-            <span className="mx-2 text-slate-300">·</span>
+            <span className="mx-2 text-slate-300 dark:text-slate-600">·</span>
             <a href="ifc-classes/" className={linkClass}>
               Приложение Ж (классы IFC) →
             </a>
           </div>
         </div>
 
-        <Card className="border-slate-200 bg-white">
+        <Card className="border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900">
           <CardContent className="overflow-x-auto p-0">
             <Table>
               <TableHeader>
-                <TableRow className="border-slate-200 hover:bg-transparent">
+                <TableRow className="border-slate-200 dark:border-slate-700 hover:bg-transparent">
                   {visibleColumns.map((c) => (
                     <TableHead key={c.key} className="whitespace-nowrap">
                       <button
                         type="button"
                         onClick={() => toggle(c.key)}
-                        className="inline-flex items-center gap-1 font-medium text-slate-600 hover:text-slate-900"
+                        className="inline-flex items-center gap-1 font-medium text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-slate-100"
                         title="Сортировать"
                       >
                         {c.title}
                         {sort.key === c.key ? (
                           <span>{sortMark(sort, c.key)}</span>
                         ) : (
-                          <ArrowDownUp className="h-3 w-3 text-slate-300" />
+                          <ArrowDownUp className="h-3 w-3 text-slate-300 dark:text-slate-600" />
                         )}
                       </button>
                     </TableHead>
@@ -267,14 +271,14 @@ export default function Mapping() {
                 {sorted.map((r, i) => (
                   <TableRow
                     key={`${r.section}-${r.ifc}-${i}`}
-                    className="border-slate-200 align-top hover:bg-slate-50"
+                    className="border-slate-200 dark:border-slate-700 align-top hover:bg-slate-50 dark:hover:bg-slate-800"
                   >
                     {visibleColumns.map((c) => (
                       <TableCell
                         key={c.key}
                         className={`whitespace-normal break-words text-sm ${
-                          c.mono ? "font-mono text-[13px] text-slate-700" : "text-slate-600"
-                        } ${c.key === "section" ? "font-medium text-slate-900" : ""}`}
+                          c.mono ? "font-mono text-[13px] text-slate-700 dark:text-slate-300" : "text-slate-600 dark:text-slate-300"
+                        } ${c.key === "section" ? "font-medium text-slate-900 dark:text-slate-100" : ""}`}
                       >
                         {getValue(r, c.key) || "—"}
                       </TableCell>
@@ -282,8 +286,8 @@ export default function Mapping() {
                   </TableRow>
                 ))}
                 {sorted.length === 0 && (
-                  <TableRow className="border-slate-200 hover:bg-transparent">
-                    <TableCell colSpan={visibleColumns.length} className="p-8 text-center text-slate-400">
+                  <TableRow className="border-slate-200 dark:border-slate-700 hover:bg-transparent">
+                    <TableCell colSpan={visibleColumns.length} className="p-8 text-center text-slate-400 dark:text-slate-500">
                       Ничего не найдено, попробуйте изменить фильтры
                     </TableCell>
                   </TableRow>

@@ -1,6 +1,7 @@
 import { ArrowRight, ExternalLink } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { MGE_PDF_URL } from "@/data/links";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 interface ServiceLink {
   title: string;
@@ -38,10 +39,13 @@ const services: ServiceLink[] = [
 
 export default function Landing() {
   return (
-    <div className="min-h-screen bg-white text-slate-900">
+    <div className="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100">
       <div className="mx-auto flex min-h-screen max-w-3xl flex-col px-4 py-10">
+        <div className="mb-6 flex justify-end">
+          <ThemeToggle />
+        </div>
         <h1
-          className="text-3xl font-medium tracking-tight text-blue-950"
+          className="text-3xl font-medium tracking-tight text-blue-950 dark:text-blue-200"
           style={{ fontFamily: "'LT Remark', Georgia, 'Times New Roman', serif" }}
         >
           Сервис проверки информационной модели
@@ -56,25 +60,25 @@ export default function Landing() {
                 : {})}
               className="group block"
             >
-              <Card className="border-slate-200 bg-white transition-colors group-hover:border-sky-300 group-hover:bg-sky-50/50">
+              <Card className="border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 transition-colors group-hover:border-sky-300 dark:group-hover:border-sky-700 group-hover:bg-sky-50/50 dark:group-hover:bg-sky-950/40">
                 <CardContent className="flex items-center justify-between gap-4 p-5">
                   <div>
-                    <div className="text-lg font-medium text-slate-900 group-hover:text-sky-800">
+                    <div className="text-lg font-medium text-slate-900 dark:text-slate-100 group-hover:text-sky-800 dark:group-hover:text-sky-300">
                       {s.title}
                     </div>
-                    <div className="mt-1 text-sm text-slate-500">{s.desc}</div>
+                    <div className="mt-1 text-sm text-slate-500 dark:text-slate-400">{s.desc}</div>
                   </div>
                   {s.external ? (
-                    <ExternalLink className="h-5 w-5 shrink-0 text-slate-400 group-hover:text-sky-600" />
+                    <ExternalLink className="h-5 w-5 shrink-0 text-slate-400 dark:text-slate-500 group-hover:text-sky-600 dark:group-hover:text-sky-400" />
                   ) : (
-                    <ArrowRight className="h-5 w-5 shrink-0 text-slate-400 transition-transform group-hover:translate-x-1 group-hover:text-sky-600" />
+                    <ArrowRight className="h-5 w-5 shrink-0 text-slate-400 dark:text-slate-500 transition-transform group-hover:translate-x-1 group-hover:text-sky-600 dark:group-hover:text-sky-400" />
                   )}
                 </CardContent>
               </Card>
             </a>
           ))}
         </div>
-        <p className="mt-auto pt-10 text-sm text-slate-400">
+        <p className="mt-auto pt-10 text-sm text-slate-400 dark:text-slate-500">
           МССК вер. 5.0 · Mapping ЦИМ АР v1.0
         </p>
       </div>
