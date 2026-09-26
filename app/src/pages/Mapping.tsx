@@ -44,6 +44,16 @@ const COLUMNS: { key: string; title: string; mono?: boolean }[] = [
 
 const ALL = "all";
 
+type Mode = "designer" | "bim";
+
+const MODES: { key: Mode; label: string }[] = [
+  { key: "designer", label: "Проектировщик" },
+  { key: "bim", label: "BIM" },
+];
+
+/** Столбцы, скрываемые в режиме «Проектировщик» */
+const DESIGNER_HIDDEN = new Set(["ifcClass", "pset"]);
+
 function uniqSorted(values: string[]): string[] {
   return [...new Set(values.filter(Boolean))].sort((a, b) => a.localeCompare(b, "ru"));
 }
@@ -94,6 +104,12 @@ export default function Mapping() {
   const [fIfcClass, setFIfcClass] = useState(ALL);
   const [fPset, setFPset] = useState(ALL);
   const [fType, setFType] = useState(ALL);
+  const [mode, setMode] = useState<Mode>("designer");
+
+  const visibleColumns = useMemo(
+    () => (mode === "designer" ? COLUMNS.filter((c) => !DESIGNER_HIDDEN.has(c.key)) : COLUMNS),
+    [mode]
+  );
 
   const sectionOptions = useMemo(() => mappingSections.map((s) => s.title), []);
   const ifcClassOptions = useMemo(() => uniqSorted(allRows.map((r) => r.ifcClass)), []);
@@ -133,6 +149,27 @@ export default function Mapping() {
           <p className="mt-2 text-slate-500">
             Mapping ЦИМ АР · соответствие параметров IFC, ФОП и требований МГЭ
           </p>
+          <div
+            role="group"
+            aria-label="Режим отображения"
+            className="mt-4 inline-flex rounded-lg border border-slate-200 bg-slate-100 p-1"
+          >
+            {MODES.map((m) => (
+              <button
+                key={m.key}
+                type="button"
+                aria-pressed={mode === m.key}
+                onClick={() => setMode(m.key)}
+                className={`rounded-md px-4 py-1.5 text-sm transition-colors ${
+                  mode === m.key
+                    ? "bg-white font-medium text-slate-900 shadow-sm"
+                    : "text-slate-500 hover:text-slate-900"
+                }`}
+              >
+                {m.label}
+              </button>
+            ))}
+          </div>
         </header>
 
         <Card className="mb-6 border-slate-200 bg-white">
@@ -207,7 +244,7 @@ export default function Mapping() {
             <Table>
               <TableHeader>
                 <TableRow className="border-slate-200 hover:bg-transparent">
-                  {COLUMNS.map((c) => (
+                  {visibleColumns.map((c) => (
                     <TableHead key={c.key} className="whitespace-nowrap">
                       <button
                         type="button"
@@ -232,7 +269,7 @@ export default function Mapping() {
                     key={`${r.section}-${r.ifc}-${i}`}
                     className="border-slate-200 align-top hover:bg-slate-50"
                   >
-                    {COLUMNS.map((c) => (
+                    {visibleColumns.map((c) => (
                       <TableCell
                         key={c.key}
                         className={`whitespace-normal break-words text-sm ${
@@ -246,7 +283,7 @@ export default function Mapping() {
                 ))}
                 {sorted.length === 0 && (
                   <TableRow className="border-slate-200 hover:bg-transparent">
-                    <TableCell colSpan={COLUMNS.length} className="p-8 text-center text-slate-400">
+                    <TableCell colSpan={visibleColumns.length} className="p-8 text-center text-slate-400">
                       Ничего не найдено, попробуйте изменить фильтры
                     </TableCell>
                   </TableRow>

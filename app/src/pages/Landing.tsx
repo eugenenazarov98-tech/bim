@@ -1,7 +1,6 @@
 import { ArrowRight, ExternalLink } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { MGE_PDF_URL } from "@/data/links";
-import { logoDataUri } from "@/assets/logo";
 
 interface ServiceLink {
   title: string;
@@ -41,9 +40,11 @@ export default function Landing() {
   return (
     <div className="min-h-screen bg-white text-slate-900">
       <div className="mx-auto flex min-h-screen max-w-3xl flex-col px-4 py-10">
-        <img src={logoDataUri} alt="МОСПРОЕКТ" className="h-12 w-auto self-start" />
-        <h1 className="mt-10 text-3xl font-bold tracking-tight">
-          Сервисы МОСПРОЕКТ · Информационная модель
+        <h1
+          className="text-3xl font-medium tracking-tight text-blue-950"
+          style={{ fontFamily: "'LT Remark', Georgia, 'Times New Roman', serif" }}
+        >
+          Сервис проверки информационной модели
         </h1>
         <div className="mt-8 grid gap-4">
           {services.map((s) => (
