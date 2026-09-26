@@ -64,7 +64,7 @@ function FilterSelect({
   options: string[];
 }) {
   return (
-    <div className="grid gap-2">
+    <div className="grid min-w-0 gap-2">
       <Label htmlFor={id} className="text-slate-600">
         {label}
       </Label>
@@ -136,7 +136,7 @@ export default function Mapping() {
         </header>
 
         <Card className="mb-6 border-slate-200 bg-white">
-          <CardContent className="grid gap-4 p-4 sm:grid-cols-2 lg:grid-cols-5">
+          <CardContent className="grid gap-4 p-4 sm:grid-cols-[repeat(2,minmax(0,1fr))] lg:grid-cols-[repeat(5,minmax(0,1fr))]">
             <div className="grid gap-2 lg:col-span-1">
               <Label htmlFor="q" className="text-slate-600">
                 Поиск

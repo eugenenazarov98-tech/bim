@@ -126,8 +126,8 @@ export default function Dictionaries() {
         </header>
 
         <Card className="mb-6 border-slate-200 bg-white">
-          <CardContent className="grid gap-4 p-4 sm:grid-cols-2">
-            <div className="grid gap-2">
+          <CardContent className="grid gap-4 p-4 sm:grid-cols-[repeat(2,minmax(0,1fr))]">
+            <div className="grid min-w-0 gap-2">
               <Label htmlFor="dict" className="text-slate-600">
                 Справочник
               </Label>

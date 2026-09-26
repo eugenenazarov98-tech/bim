@@ -563,7 +563,7 @@ export default function Classification() {
               </Popover>
             </div>
 
-            <div className="grid gap-2">
+            <div className="grid min-w-0 gap-2">
               <Label htmlFor="mssk-source" className="text-slate-600">
                 Категория МССК
               </Label>

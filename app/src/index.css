@@ -72,4 +72,12 @@
   body {
     @apply bg-background text-foreground;
   }
+  /* выбранное значение в select не должно вылезать за границы кнопки */
+  [data-slot="select-trigger"] > [data-slot="select-value"] {
+    display: block;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
 }
