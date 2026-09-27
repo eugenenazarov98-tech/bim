@@ -277,7 +277,7 @@ export default function Mapping() {
                       <TableCell
                         key={c.key}
                         className={`whitespace-normal break-words text-sm ${
-                          c.mono ? "font-mono text-[13px] text-slate-700 dark:text-slate-300" : "text-slate-600 dark:text-slate-300"
+                          c.mono ? "font-mono text-sm text-slate-700 dark:text-slate-300" : "text-slate-600 dark:text-slate-300"
                         } ${c.key === "section" ? "font-medium text-slate-900 dark:text-slate-100" : ""}`}
                       >
                         {getValue(r, c.key) || "—"}
