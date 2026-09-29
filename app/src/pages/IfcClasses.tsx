@@ -14,6 +14,7 @@ import {
 import { ifcClasses, type IfcClassRow } from "@/data/ifcClasses";
 import { sortMark, useSortable } from "@/hooks/useSortable";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { CursorCat } from "@/components/CursorCat";
 
 const COLUMNS = [
   { key: "category", title: "Категория элементов ЦИМ" },
@@ -39,6 +40,7 @@ export default function IfcClasses() {
 
   return (
     <div className="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100">
+      <CursorCat />
       <div className="mx-auto max-w-4xl px-4 py-8">
         <header className="mb-8">
           <div className="flex items-center gap-4 text-sm">

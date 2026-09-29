@@ -49,6 +49,7 @@ import {
 import { revitCategories, type RevitCategory } from "@/data/categories";
 import { MGE_PDF_URL, linkClass } from "@/data/links";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { CursorCat } from "@/components/CursorCat";
 
 /* ---------- types ---------- */
 
@@ -485,6 +486,7 @@ export default function Classification() {
 
   return (
     <div className="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100">
+      <CursorCat />
       <div className="mx-auto max-w-6xl px-4 py-8">
         <header className="mb-8">
           <div className="flex items-center justify-between">

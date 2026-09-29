@@ -21,6 +21,7 @@ import {
 } from "lucide-react";
 import { convertHtmlToIds, type ConversionResult } from "@/lib/idsConverter";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { CursorCat } from "@/components/CursorCat";
 
 const SAMPLE_HTML = `<html><body>
 <section class="specification">
@@ -161,6 +162,7 @@ export default function IdsConverter() {
 
   return (
     <div className="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100">
+      <CursorCat />
       <main className="max-w-7xl mx-auto px-4 sm:px-6 py-8 space-y-6">
         <header className="mb-2">
           <div className="flex items-center justify-between">

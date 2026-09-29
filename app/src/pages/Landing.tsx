@@ -2,6 +2,7 @@ import { ArrowRight, ExternalLink } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { MGE_PDF_URL } from "@/data/links";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { CursorCat } from "@/components/CursorCat";
 
 interface ServiceLink {
   title: string;
@@ -40,6 +41,7 @@ const services: ServiceLink[] = [
 export default function Landing() {
   return (
     <div className="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100">
+      <CursorCat />
       <div className="mx-auto flex min-h-screen max-w-3xl flex-col px-4 py-10">
         <div className="mb-6 flex justify-end">
           <ThemeToggle />
